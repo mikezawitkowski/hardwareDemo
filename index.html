@@ -1,1 +1,166 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Data Analytics Dashboard</title>
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Bootstrap -->
+    <link href='static/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <link href='static/css/dc.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="static/css/style.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="container-fluid">
+
+      <!--  920 x 147.19 is size of stark industries logo; the file is 5000 x 800 pixels; so let's just cut it in half -->
+      <a href="http://mikezawitkowski.com"><img src="static/img/Stark_Industries_logo.png" width="500" height="80" alt="Stark Industries fake example company logo"></a>
+
+      <h1>Analytics Dashboard</h1>
+      <br />
+      <h2>Hours per Day Data by Device, by Day</h2>
+      <br />
+
+      <!--TODO: Fix the display of the reset button on brush of the sync and hours histograms, using css/js width configuration -->
+      <!--TODO: add intro.js to this-->
+      <div class="row-fluid pull-left">
+        <div class="dc-data-count">
+          <div id="record-data-count" class="pull-left"></div>
+          <div id="unit-data-count" class="pull-left"></div>
+        </div>
+        <br /><br />
+      </div>
+
+      <div class="row-fluid pull-left">
+      </div>
+
+      <div class="row-fluid">
+
+        <div id="hours-chart">
+          <strong>Hours On Per Day</strong>
+          <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+          <a class="reset" href="javascript:hoursChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+          <div class="clearfix"></div>
+        </div>
+
+        <div id="sync-chart">
+          <strong>Hours of Awesome</strong>
+          <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+          <a class="reset" href="javascript:syncChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+          <div class="clearfix"></div>
+        </div>
+
+        <div id="day-of-week-chart">
+          <strong>Day of Week</strong>
+            <a class="reset" href="javascript:dayOfWeekChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+            <div class="clearfix"></div>
+        </div>
+
+        <div id="us-chart">
+          <strong> USA Map</strong>
+          <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+          <a class="reset" href="javascript:usaMap.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        </div>
+
+      </div>
+
+      <div class="row-fluid">
+        <div id="dau-chart">
+          <strong>Number of Serial Numbers Active Per Day (new vs returning)</strong>
+            <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+            <a class="reset" href="javascript:dailyActivesChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div id="exportable-table">
+        <table class="table table-hover dc-data-table"></table>
+      </div>
+      </div>
+      <div class="clearfix"></div>
+
+      <br/>
+      <p><strong>Downloads</strong> (csv):<br />
+        <a href="#" class="export">Above selection only</a> |
+        <a href="static/data/dayparted_sns.csv" target="_blank">Source data for this page</a> |
+        <!-- <a href="static/data/full_history.csv" target="_blank">raw stark dataset (full history)</a> | -->
+        <a href="javascript:AnAlert();">raw stark dataset (full history)</a>
+      <br/>
+
+      <br/>
+
+      <script type="text/javascript">
+      function AnAlert() {
+        return window.alert('This feature is disabled.\nWhat did you expect from a demo?');
+      }
+      </script>
+
+
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" href="#notes-section">Notes, Definitions, Assumptions</a>
+            </h4>
+          </div>
+          <div id="notes-section" class="panel-collapse collapse">
+            <ul class="list-group">
+              <li class="list-group-item"><strong>Dashboard data is based on hourly 'heartbeat' messages emitted by each Stark device powered and connected to the internet.</strong> In the rare cases where a unit emits only a single heartbeat in one day, it is assumed that this unit was on for at least 45 minutes.</li>
+              <li class="list-group-item"><strong>Hours per day per unit calculation:</strong> Hours per day is calculated for each unit by looking at the first message and last message timestamps recorded within a 24 hour period. If there is a gap of 90 or more minutes between recorded messages, that gap is subtracted from the total minutes for that unit for the day. For example, the histogram 'Hours on Per Day' shows the number of hours per day per serial number, so if multiple days are selected, one unit may be included multiple times (once per 24-hour period).</li>
+              <li class="list-group-item"><strong>Times and dates are UTC.</strong>Except where explicitly stated otherwise, all date and time units should be assumed to be in Coordinated Universal Time (UTC). This is equivalent of using Greenwich Mean Time (GMT) as the time zone. For example, data displayed as the date of April 28, 2016 includes unit heartbeat messages received on or after April 27, 2016 8:00 pm but before April 28 7:59:59 pm Eastern Time.</li>
+              <li class="list-group-item"><strong>Geographic data is an estimate and omits some units.</strong> Geographic info is based on IP address. In many cases the exact location of the IP address (such as the US state) can't be determined, and in those cases a best guess is made, or the unit is omitted entirely. For that reason the map data will almost never include 100% of all the units. Also, IP addresses will change for a specific unit, so some units located near a state's border may appear to be in two states at once.</li>
+              <li class="list-group-item"><strong>Dashboard is updated daily.</strong> Around 2:00 a.m. UTC every day, all new data captured over the previous 24 hours is processed, cleaned, and incorporated into this dashboard.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <br/>
+
+      <hr>
+        <br/>
+
+      <footer>
+        <span style="float:right;">
+          Created by <a href="http://www.mikezawitkowski.com">Mike Zawitkowski</a>
+        </span>
+        Copyright 2016 <a href="http://mikezawitkowski.com">Stark Industries, Inc.</a>
+      </footer>
+
+    </div>
+
+    <!-- THIRD-PARTY JAVASCRIPT LIBRARIES  -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src='static/lib/jquery-1.12.3.min.js' type='text/javascript'></script>
+    <script src='static/lib/bootstrap.min.js' type='text/javascript'></script>
+    <script src='static/lib/crossfilter.min.js' type='text/javascript'></script>
+    <script src='static/lib/d3.min.js' type='text/javascript'></script>
+    <script src='static/lib/dc.min.js' type='text/javascript'></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="static/js/core.js" type="text/javascript"></script>
+    <script src="static/js/exporttable.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+      function AlertIt() {
+      var answer = confirm ("Please click on OK to continue.")
+      if (answer)
+        window.location="http://www.continue.com";
+    }
+    </script>
+
+  </body>
+</html>
