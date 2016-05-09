@@ -2,22 +2,6 @@
 /* jshint globalstrict: true */
 /* global dc,d3,crossfilter,colorbrewer */
 
-/* THE TODO LIST:
-- TODO: show a row of histograms that has an adjust min max omitting 24
-
-- TODO fix the missing latitude/longitude issue and adding a map to this (so we can do things like compare all east coast vs west coast devices).
-- TODO: fix the missing state information for the US choropleth map by adding in the premium data source for geo data
-- TODO: add a chart showing the priority devices - is that possible to do within the same data source or a different one?
-
-
-// DEFERED
-- TODO: rename hours_in_sync to Hours in Sync in the table
-- TODO Enable selection of a single serial number and see detail information and stats for that particular serial number.
-- TODO: add the median and mean lines to the histograms, and maybe a tooltip with the stats
-- TODO refactor: clean up naming replace nasdaq with other stuff
-- TODO: refactor: replace flights
-- TODO: fix the transition on page refresh so that the titles are hidden until the charts load
-*/
 
 var hoursChart = dc.barChart('#hours-chart');
 var syncChart = dc.barChart('#sync-chart');
