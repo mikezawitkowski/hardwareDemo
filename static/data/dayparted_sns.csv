@@ -447,6 +447,7 @@ date,hours_in_sync,hours,state,country,dau_status,unit_id,serial_number
 2016-04-21,0.778611111111,0.778611111111,MA,United States,return,127.0,a127
 2016-04-20,0.761111111111,0.761111111111,MA,United States,return,66.0,a66
 2016-04-17,0.759166666667,0.759166666667,MO,United States,new,22.0,a22
+<<<<<<< HEAD
 2016-04-20,0.758333333333,0.758333333333,MA,United States,return,60.0,a60
 2016-04-22,0.75,0.75,NC,United States,return,35.0,a35
 2016-04-21,0.75,0.75,MA,United States,new,116.0,a116
@@ -531,3 +532,5 @@ date,hours_in_sync,hours,state,country,dau_status,unit_id,serial_number
 2016-04-21,0.0688888888889,0.0688888888889,MA,United States,new,40.0,a40
 2016-04-21,0.0680555555556,0.0680555555556,MA,United States,new,47.0,a47
 2016-04-15,0.0611111111111,0.0611111111111,MA,United States,return,6.0,a6
+=======
+>>>>>>> master
